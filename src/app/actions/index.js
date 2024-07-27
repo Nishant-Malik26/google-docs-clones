@@ -45,3 +45,19 @@ export async function create(input) {
     throw new Error("Error creating document");
   }
 }
+
+export async function getDocs() {
+  await connectDB();
+
+  try {
+    const session = await auth();
+    const user = await Users.findOne({ email: session.user.email });
+    console.log("🚀 ~ getDocs ~ user:", user._id);
+    const docs = await Docs.find({ user: user?._id });
+    return docs.map((val) => {
+      return { id: val._id.toString(), filename: val.filename };
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}

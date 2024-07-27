@@ -4,8 +4,10 @@ import { Folder, LogoutRounded, MoreVert } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { doLogout } from "./actions";
+import { doLogout, getDocs } from "./actions";
 import Link from "next/link";
+import DocumentRow from '@/components/DocumentRow';
+
 
 export default async function Home() {
   const session = await auth();
@@ -13,6 +15,8 @@ export default async function Home() {
   const props = {
     session: session,
   };
+
+  const docs = await getDocs();
   return (
     <>
       <Header {...props} />
@@ -47,6 +51,10 @@ export default async function Home() {
             <p className="mr-12">Date Created</p>
             <Folder color="action" />
           </div>
+          {docs?.map((doc) => (
+            // <DocumentRow key={doc?.id}>{doc?.filename}</DocumentRow>
+            <DocumentRow key={doc.id} {...doc} />
+          ))}
         </div>
         <form action={doLogout}>
           <IconButton type="submit">Logout</IconButton>
