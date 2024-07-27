@@ -8,6 +8,10 @@ const DocsSchema = new mongoose.Schema({
   filename: {
     type: String,
   },
+  editorState: {
+    type: Object,
+    default: {},
+  },
 });
 
 const Docs = mongoose.models.Docs || mongoose.model("Docs", DocsSchema);
