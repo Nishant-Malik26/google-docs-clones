@@ -17,9 +17,7 @@ export async function doLogout() {
 }
 export async function connectDB() {
   try {
-    mongoose.connect(
-      "mongodb+srv://nishantmalik2015:qYRh1Om8mNf8G7ih@cluster0.0uzogt3.mongodb.net/docs"
-    );
+    mongoose.connect(process.env.MONGODB_URI);
     console.log("first");
   } catch (error) {
     console.log(error);
